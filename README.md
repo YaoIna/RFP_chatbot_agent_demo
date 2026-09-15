@@ -64,25 +64,3 @@ The final DOCX is generated only after explicit user approval.
 Cases created by the retired custom state machine remain visible. Completed legacy
 cases with an existing document can still be exported. Active legacy cases cannot be
 resumed by the new graph and must be restarted with `new`.
-
-## Verification
-
-```sh
-uv run pytest -m "not deepseek"
-uv run ruff check .
-uv run mypy src/rfq_agent
-```
-
-Offline tests use stub chains and mocked HTTP transport. The paid DeepSeek acceptance
-suite is opt-in and is not part of normal verification:
-
-```sh
-RFQ_RUN_DEEPSEEK=1 uv run pytest tests/smoke/test_deepseek_e2e.py -m deepseek -v
-```
-
-It checks classification across all four supported RFQ types and drives a sparse
-Hardware/Equipment request through the real LangChain/LangGraph workflow. The live
-harness has a turn guard to bound test cost; production has no question limit.
-
-See [the demo runbook](docs/demo-runbook.md) for the interaction flow and recovery
-details.
